@@ -37,10 +37,11 @@ Where:
 ## Under the hood:
 1. DIY Hardware - ``
 2. Web server - `server.py`
+3. Screenshot bot - `bot.py`
 
 
 #### Send Command with an accelerometer:
 1. Two shakes - create a screenshot. (Immediately successful command confirmation `* *`)
 2. Three shakes - send saved screenshots to OpenAI. (Immediately successful command confirmation `* * *`)
-3. Four shakes - clear the screenshots queue and start from scratch. (Immediately successful command confirmation `* * *`)
+3. Four shakes - clear the screenshots queue and start from scratch. (Immediately successful command confirmation `* -`)
 4. Error recognize command `* - * -`
