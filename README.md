@@ -46,6 +46,7 @@ Run `laptop_client.py`
 Requirements:
 * Python 3.9.1
 * OpenSSL 3.3.1
+* OpenAI API key as `OPENAI_API_KEY` environment variable
 
 Dependencies install: `pip install Flask paho-mqtt PyAutoGUI pyOpenSSL requests screeninfo Pillow`
 
