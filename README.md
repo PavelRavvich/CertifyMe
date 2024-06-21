@@ -2,7 +2,7 @@
 Quiz certification helper for pass exams hidden using OpenAI to generate answers
 
 We need:
-1. `ESP32 C3` - Core CPU Module with built-in WiFi and Bluetooth
+1. `ESP32 C3` - Core CPU Module with built-in Wi-Fi and Bluetooth
 2. `TZT LIS3DSH LIS3DH` - accelerometer module using as interface
 3. `PWM Vibration Motor Module DC Motor Phone Vibrator` - answer receiver
 4. `CR2450` - Power Battery 3V
@@ -34,10 +34,20 @@ Where:
 `-`: long vibro call
 
 
-## Under the hood:
-1. DIY Hardware - ``
-2. Web server - `server.py`
-3. Screenshot bot - `bot.py`
+## Under the hood: 
+
+**ESP32 C3 Client** and **Laptop Client** communicate via MQTT `mqtt.eclipseprojects.io` broker, `1883` port.
+
+### ESP32 C3 Client
+// TODO
+### Laptop Client 
+Run `laptop_client.py` 
+
+Requirements:
+* Python 3.9.1
+* OpenSSL 3.3.1
+
+Dependencies install: `pip install Flask paho-mqtt PyAutoGUI pyOpenSSL requests screeninfo Pillow`
 
 
 #### Send Command with an accelerometer:
