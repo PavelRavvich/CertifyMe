@@ -1,4 +1,7 @@
 # CertifyMe
+
+[![LaptopClient CI](https://github.com/PavelRavvich/CertifyMe/actions/workflows/laptop_client.yml/badge.svg?branch=master)](https://github.com/PavelRavvich/CertifyMe/actions/workflows/laptop_client.yml)
+
 Quiz certification helper for pass exams hidden using OpenAI to generate answers
 
 We need:
