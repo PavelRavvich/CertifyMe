@@ -2,6 +2,7 @@ import time
 import unittest
 from unittest.mock import patch
 import paho.mqtt.client as mqtt
+from conf import mqtt_pull_topic, mqtt_host, mqtt_port, mqtt_push_topic
 import json
 
 import laptop_client
@@ -21,7 +22,7 @@ class TestMQTTCommands(unittest.TestCase):
     def on_connect(self, client, userdata, flags, rc, properties):
         if rc == 0:
             self.connected = True
-            self.client.subscribe("5d9f651bff57b/laptop-cmd")
+            self.client.subscribe(mqtt_pull_topic)
         else:
             print(f"Failed to connect, return code {rc}\n")
 
@@ -29,13 +30,13 @@ class TestMQTTCommands(unittest.TestCase):
         self.messages.append(json.loads(msg.payload.decode('utf-8')))
 
     def test_mqtt_connection(self):
-        self.client.connect("mqtt.eclipseprojects.io", 1883, 60)
+        self.client.connect(mqtt_host, mqtt_port, 60)
         self.client.loop_start()
         time.sleep(2)
         self.assertTrue(self.connected)
 
         test_message = {"cmd": "save-screenshot"}
-        self.client.publish("5d9f651bff57b/laptop-cmd", json.dumps(test_message))
+        self.client.publish(mqtt_pull_topic, json.dumps(test_message))
         time.sleep(1)
 
         self.assertIn(test_message, self.messages)

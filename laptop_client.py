@@ -16,17 +16,13 @@ from screeninfo import get_monitors
 
 import ssl
 import sys
+
+from conf import mqtt_pull_topic, mqtt_host, mqtt_port, mqtt_push_topic, prompt, max_tokens
+
 print(ssl.OPENSSL_VERSION)
 print(sys.executable)
 
 
-mqtt_port = 1883
-mqtt_host = "mqtt.eclipseprojects.io"
-mqtt_push_topic = "5d9f651bff57b/esp32-cmd"
-mqtt_pull_topic = "5d9f651bff57b/laptop-cmd"
-
-max_tokens = 1024
-PROMPT = "Please describe the image."
 api_key = os.getenv("OPENAI_API_KEY")
 max_retry = 3
 screenshots = []
@@ -83,7 +79,7 @@ def ai_complete(base64_image_list):
                 "content": [
                                {
                                    "type": "text",
-                                   "text": PROMPT
+                                   "text": prompt
                                }
                            ] + images_to_request()
             }
