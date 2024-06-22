@@ -14,14 +14,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        node-version: '20'
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
-        node-version: '20'
+        python-version: 3.9
 
     - name: Install Xvfb and dependencies
       run: sudo apt-get install -y xvfb
