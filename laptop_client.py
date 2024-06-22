@@ -20,15 +20,17 @@ print(ssl.OPENSSL_VERSION)
 print(sys.executable)
 
 
+mqtt_port = 1883
+mqtt_host = "mqtt.eclipseprojects.io"
+mqtt_push_topic = "5d9f651bff57b/esp32-cmd"
+mqtt_pull_topic = "5d9f651bff57b/laptop-cmd"
+
 max_tokens = 1024
 PROMPT = "Please describe the image."
 api_key = os.getenv("OPENAI_API_KEY")
 max_retry = 3
 screenshots = []
 
-
-mqtt_port = 1883
-mqtt_host = "mqtt.eclipseprojects.io"
 pull_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 push_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 
@@ -112,7 +114,7 @@ def connect_mqtt():
     def on_connect(client, userdata, flags, rc, properties):
         if rc == 0:
             logging.info("Connected successfully to MQTT broker")
-            client.subscribe("5d9f651bff57b/laptop-cmd")
+            client.subscribe(mqtt_pull_topic)
         else:
             logging.error(f"Failed to connect, return code {rc}")
 
@@ -140,23 +142,23 @@ def on_message(client, userdata, msg):
         screenshot = make_screenshot()
         screenshots.append(screenshot)
         notification = {"status": "SCREEN_SAVED"}
-        push_client.publish("5d9f651bff57b/esp32-cmd", json.dumps(notification))
+        push_client.publish(mqtt_push_topic, json.dumps(notification))
         logging.info("Screenshot created.")
     elif cmd == "clear-screenshots":
         screenshots.clear()
         notification = {"status": "SCREEN_CLEAR"}
-        push_client.publish("5d9f651bff57b/esp32-cmd", json.dumps(notification))
+        push_client.publish(mqtt_push_topic, json.dumps(notification))
         logging.info("Screenshots cleared.")
     elif cmd == "send-to-ai":
         result = ai_complete(screenshots)
         notification = {"status": "AI_COMPLETE", "answer": result}
-        push_client.publish("5d9f651bff57b/esp32-cmd", json.dumps(notification))
+        push_client.publish(mqtt_push_topic, json.dumps(notification))
         logging.info(f"AI completion result: {result}")
         screenshots.clear()
     else:
         logging.warning(f"Unknown command: {cmd}")
         notification = {"status": "UNKNOWN_CMD"}
-        push_client.publish("5d9f651bff57b/esp32-cmd", json.dumps(notification))
+        push_client.publish(mqtt_push_topic, json.dumps(notification))
 
 
 def run_mqtt():
