@@ -20,13 +20,8 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install Xvfb
+    - name: Install Xvfb and dependencies
       run: sudo apt-get install -y xvfb
-
-    - name: Run Xvfb
-      run: |
-        export DISPLAY=:99
-        Xvfb :99 -screen 0 1024x768x16 &
 
     - name: Install dependencies
       run: |
@@ -35,5 +30,4 @@ jobs:
 
     - name: Run tests
       run: |
-        export DISPLAY=:99
-        python -m unittest discover -s test -p "*.py"
+        xvfb-run -a python -m unittest discover -s test -p "*.py"
