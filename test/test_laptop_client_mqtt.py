@@ -5,8 +5,6 @@ import paho.mqtt.client as mqtt
 from conf import mqtt_pull_topic, mqtt_host, mqtt_port, mqtt_push_topic
 import json
 
-import laptop_client
-
 
 class TestMQTTCommands(unittest.TestCase):
     def setUp(self):
