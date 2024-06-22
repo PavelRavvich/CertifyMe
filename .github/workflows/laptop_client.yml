@@ -1,4 +1,4 @@
-name: Python CI
+name: LaptopClient CI
 
 on:
   push:
