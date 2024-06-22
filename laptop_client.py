@@ -146,7 +146,7 @@ def on_message(client, userdata, msg):
         push_client.publish(mqtt_push_topic, json.dumps(notification))
         logging.info("Screenshots cleared.")
     elif cmd == "send-to-ai":
-        result = ai_complete(screenshots)
+        result = ai_complete(screenshots[:])
         notification = {"status": "AI_COMPLETE", "answer": result}
         push_client.publish(mqtt_push_topic, json.dumps(notification))
         logging.info(f"AI completion result: {result}")
