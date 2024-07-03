@@ -59,3 +59,5 @@ Dependencies install: `pip install Flask paho-mqtt PyAutoGUI pyOpenSSL requests 
 2. Three shakes - send saved screenshots to OpenAI. (Immediately successful command confirmation `* * *`)
 3. Four shakes - clear the screenshots queue and start from scratch. (Immediately successful command confirmation `* -`)
 4. Error recognize command `* - * -`
+
+Run IDE on MacOS: `sudo -E /Applications/Arduino\ IDE.app/Contents/MacOS/Arduino\ IDE`
