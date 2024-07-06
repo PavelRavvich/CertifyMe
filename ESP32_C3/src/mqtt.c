@@ -28,6 +28,9 @@ static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
         break;
         case MQTT_EVENT_DATA:
             ESP_LOGI(TAG, "Received data: %.*s", event->data_len, event->data);
+            if (g_callback != NULL) {
+                g_callback(event->data, event->data_len);
+            }
         break;
         default:
             ESP_LOGI(TAG, "Unhandled event: %d", event->event_id);
