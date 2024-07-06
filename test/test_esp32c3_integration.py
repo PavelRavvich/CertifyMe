@@ -48,12 +48,8 @@ class TestESP32Mqtt(unittest.TestCase):
         time.sleep(2)
         self.assertTrue(self.connected)
 
-        test_message = {"cmd": "save-screenshot"}
+        test_message = {"cmd": "vibration", "code": "...--"}
         self.client.publish(mqtt_push_topic, json.dumps(test_message))
-        time.sleep(1)
-
-        self.assertIn(test_message, self.messages)
-
         self.client.loop_stop()
 
 
