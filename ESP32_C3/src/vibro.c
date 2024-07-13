@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include "driver/gpio.h"
 #include <string.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 int dot_duration = 500;
 int dash_duration = 1000;
@@ -21,7 +23,7 @@ void setup_vibrator(gpio_num_t pin, int dot_duration_ms, int dash_duration_ms, i
 
 void activate_vibrator(int duration) {
     gpio_set_level(vibrator_pin, 1);
-    usleep(duration * 1000);
+    vTaskDelay(pdMS_TO_TICKS(duration));
     gpio_set_level(vibrator_pin, 0);
 }
 
@@ -46,7 +48,21 @@ void vibrate(const char *signals) {
             activate_vibrator(dash_duration);
         }
         if (i < length - 1) {
-            usleep(pause_duration * 1000);
+            vTaskDelay(pdMS_TO_TICKS(pause_duration));
         }
+    }
+}
+
+void vibrate_task(void *pvParameters) {
+    char* signals = (char*) pvParameters;
+    vibrate(signals);
+    free(signals);
+    vTaskDelete(NULL);
+}
+
+void start_vibration(const char* signals) {
+    char* task_signals = strdup(signals);
+    if (task_signals) {
+        xTaskCreate(vibrate_task, "VibratorTask", 2048, (void*)task_signals, 5, NULL);
     }
 }

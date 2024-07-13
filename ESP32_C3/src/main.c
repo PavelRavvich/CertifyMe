@@ -26,8 +26,9 @@ static const int pause_duration = 300;
 
 void pull_topic_mqtt_callback(const char* data, const int data_len) {
     char* code = parse(data, data_len);
-    vibrate(code);
-    free(code);
+    if (code) {
+        start_vibration(code);
+    }
 }
 
 void app_main(void) {
